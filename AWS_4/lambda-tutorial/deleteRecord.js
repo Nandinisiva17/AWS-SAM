@@ -1,5 +1,3 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
 let response
 var airtable = require("airtable")
 const env = require("dotenv").config()
@@ -27,7 +25,7 @@ exports.lambdaHandler = async (event, context) => {
         "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({
-        message: "Successfully deleted record"
+        message: "Successfully Deleted Record"
       })
     }
   } catch (err) {

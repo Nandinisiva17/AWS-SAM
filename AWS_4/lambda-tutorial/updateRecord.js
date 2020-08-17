@@ -1,5 +1,3 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
 let response
 var airtable = require("airtable")
 const env = require("dotenv").config()
@@ -38,7 +36,7 @@ exports.lambdaHandler = async (event, context) => {
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
       },
       body: JSON.stringify({
-        message: "Successfully updated again"
+        message: "Successfully Updated Record"
       })
     }
   } catch (err) {

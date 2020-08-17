@@ -1,7 +1,4 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
 let response
-// import { v4 as uuidv4 } from "uuid"
 var airtable = require("airtable")
 const { v4: uuidv4 } = require("uuid")
 const env = require("dotenv").config()
@@ -22,31 +19,12 @@ const table = base("Todo List")
 exports.lambdaHandler = async (event, context, callback) => {
   try {
     let name = JSON.parse(event.body)
-    const createRecord = await table.create(
-      {
-        "Due Date": name.duedate,
-        Status: name.status,
-        Task: name.task,
-        uuid: name.uuid
-      }
-
-      // {
-      //   "Due Date": name.duedate,
-      //   Status: name.status,
-      //   Task: name.task,
-      //   uuid: uuidv4()
-      // }
-      // function (err, records) {
-      //   if (err) {
-      //     console.error(err)
-      //     return
-      //   }
-      //   records.forEach(function (record) {
-      //     task.id = record.getId()
-      //     console.log(task.id)
-      //   })
-      // }
-    )
+    const createRecord = await table.create({
+      "Due Date": name.duedate,
+      Status: name.status,
+      Task: name.task,
+      uuid: name.uuid
+    })
     return {
       statusCode: 200,
       headers: {
@@ -56,7 +34,7 @@ exports.lambdaHandler = async (event, context, callback) => {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONSx`x`"
       },
-      body: JSON.stringify({ message: "successfully created again amd again" })
+      body: JSON.stringify({ message: "Successfuly Created Record" })
     }
   } catch (e) {
     console.log("error")

@@ -102,3 +102,30 @@ Resources:
             RestApiId: !Ref QiannowTodoListApi
             Path: /updaterecordid/{id}
             Method: put
+  UpdateStatusFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: updateStatus.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        RetrievePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /updatestatus
+            Method: put
+
+  UpdateDueDateFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: updateDueDate.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        RetrievePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /updateduedate
+            Method: put

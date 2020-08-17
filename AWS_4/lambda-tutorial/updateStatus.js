@@ -17,18 +17,29 @@ const table = base("Todo List")
  */
 exports.lambdaHandler = async (event, context) => {
   try {
-    const records = await table.select({ view: "Grid view" }).all()
+    const records = await table
+      .select({
+        filterByFormula: '{Status}= "Not Started Yet"'
+      })
+      .all()
+
+    for (record of records) {
+      await table.update(record.fields.ID, {
+        Status: "In progress"
+      })
+    }
+
     response = {
       statusCode: 200,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "Access-Control-Allow-Headers": "'Content-Type  ,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
       },
       body: JSON.stringify({
-        message: records
+        message: "Successfully Updated Record Status"
       })
     }
   } catch (err) {
