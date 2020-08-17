@@ -1,0 +1,104 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  AWS_4
+
+  Sample SAM Template for AWS_4
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  QiannowTodoListApi:
+    Type: AWS::Serverless::Api # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Name: qiannow-todolist
+      StageName: Prod
+      Cors:
+        AllowMethods: "'*'"
+        AllowHeaders: "'*'"
+        AllowOrigin: "'*'"
+
+  CreateRecordFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: createRecord.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        CreatePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /createrecord
+            Method: post
+
+  RetrieveRecordFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: retrieveRecord.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        RetrievePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /retrieverecord
+            Method: get
+
+  UpdateRecordFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: updateRecord.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        RetrievePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /updaterecord/{id}
+            Method: put
+
+  DeleteRecordFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: deleteRecord.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        RetrievePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /deleterecord/{id}
+            Method: delete
+  DeleteRecordIdFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: deleteRecordId.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        RetrievePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /deleterecordid/{id}
+            Method: delete
+  UpdateRecordIdFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda-tutorial/
+      Handler: updateRecordId.lambdaHandler
+      Runtime: nodejs12.x
+      Events:
+        RetrievePost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            RestApiId: !Ref QiannowTodoListApi
+            Path: /updaterecordid/{id}
+            Method: put
